@@ -1,7 +1,7 @@
 <?php
 // Query to fetch the image source and uploader's username
-$sql = "SELECT image_source, uploader_username, message_content
-        FROM your_table
+$sql = "SELECT image_source, username, message_content, mdeia_files
+        FROM user_uploads
         ORDER BY created_at DESC
         LIMIT 10";
 $result = mysqli_query($conn, $sql);
@@ -9,8 +9,9 @@ $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $imageSource = $row["image_source"];
-        $uploaderUsername = $row["uploader_username"];
+        $uploaderUsername = $row["username"];
         $messageContent = $row["message_content"];
+        $messageFiles = $row["media_files"];
 
         // Output the HTML structure
         echo '<div class="media text-muted pt-3">';
@@ -18,6 +19,7 @@ if (mysqli_num_rows($result) > 0) {
         echo '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
         echo '<strong class="d-block text-gray-dark">@' . $uploaderUsername . '</strong>';
         echo $messageContent;
+        echo $messageFiles;
         // Add media files like audio, images, or videos here
         echo '</p>';
         echo '</div>';
