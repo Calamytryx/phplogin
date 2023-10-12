@@ -32,26 +32,43 @@ check_verified();
       <div class="my-3 p-3 bg-white rounded box-shadow">
         <h4 class="mb-0">Latest posts</h4>
         <?php include "includes/post.php" ?>
-
-        <form action="includes\process_post.php" method="post" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="post_content">Post Content:</label>
-            <textarea class="form-control" id="post_content" name="post_content" rows="4"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="media_upload">Upload Media:</label>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="media_upload" name="media_upload">
-              <label class="custom-file-label" for="media_upload">Choose file</label>
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div id="headingOne">
+              <button class="container-fluid btn btn-dark" type="button" data-toggle="collapse"
+                data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                <h5>Add a post</h5>
+              </button>
             </div>
+            <div id="collapse1" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <div class="text-center d-flex flex-column">
+                  <form action="includes\process_post.php" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="post_content">Post Content:</label>
+                      <textarea class="form-control" id="post_content" name="post_content" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="media_upload">Upload Media:</label>
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="media_upload" name="media_upload">
+                        <label class="custom-file-label" for="media_upload">Choose file</label>
+                      </div>
 
+                    </div>
+                    <button type="submit" class="btn btn-dark">Create Post</button>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
-          <button type="submit" class="btn btn-dark">Create Post</button>
-        </form>
+        </div>
+
+
 
 
         <small class="d-block text-right mt-3">
-          <a href="#">All updates</a>
+          <a href="#"><i class="fas fa-redo"></i></a>
         </small>
       </div>
     </div>

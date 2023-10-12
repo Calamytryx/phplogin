@@ -14,37 +14,45 @@
           <small>[Development in Progress]</small>
         </div>
         <div class="borderdb border-none">
-
         </div>
-
       </div>
       <div class="my-3 p-3 bg-white rounded box-shadow">
         <h4 class="mb-0">Your posts</h4>
         <?php include "includes/users/user-post.php" ?>
-
-        <form action="includes\users\process_post.php" method="post" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="post_content">Post Content:</label>
-            <textarea class="form-control" id="post_content" name="post_content" rows="4"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="media_upload">Upload Media:</label>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="media_upload" name="media_upload">
-              <label class="custom-file-label" for="media_upload">Choose file</label>
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div id="headingOne">
+              <button class="container-fluid btn btn-dark" type="button" data-toggle="collapse" data-target="#collapse1"
+                aria-expanded="true" aria-controls="collapse1">
+                <h5>Add a post</h5>
+              </button>
             </div>
+            <div id="collapse1" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <div class="text-center d-flex flex-column">
+                  <form action="includes\process_post.php" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="post_content">Post Content:</label>
+                      <textarea class="form-control" id="post_content" name="post_content" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="media_upload">Upload Media:</label>
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="media_upload" name="media_upload">
+                        <label class="custom-file-label" for="media_upload">Choose file</label>
+                      </div>
 
+                    </div>
+                    <button type="submit" class="btn btn-dark">Create Post</button>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
-          <button type="submit" class="btn btn-dark">Create Post</button>
-        </form>
-        
-        <small class="d-block text-right mt-3">
-          <a href="#">All updates</a>
-        </small>
+        </div>
+
       </div>
-
     </div>
-
     <div class="col-sm-2">
       <div class="d-flex align-items-center p-1 mt-5 mb-3 bg-dark rounded box-shadow">
         <div class="m-1 p-1 bg-white rounded box-shadow" style="height: 100%;">
@@ -67,5 +75,4 @@
       </div>
 
     </div>
-  </div>
 </main>

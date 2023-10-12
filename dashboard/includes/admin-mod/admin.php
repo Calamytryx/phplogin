@@ -23,7 +23,7 @@
         <?php include("user-table.php") ?>
 
         <small class="d-block text-right mt-3">
-          <a href="#">All updates</a>
+          <a href="#"><i class="fas fa-redo"></i></a>
         </small>
       </div>
 

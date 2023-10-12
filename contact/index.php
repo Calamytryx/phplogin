@@ -52,8 +52,8 @@ include '../assets/layouts/header.php';
             required></textarea>
         </div>
 
-        <div class="text-center mx-5 px-5">
-          <button class="btn btn-lg btn-primary btn-block" type="submit" name="contact-submit"
+        <div class="text-center">
+          <button class="btn btn-dark btn-block" type="submit" name="contact-submit"
             value="contact-submit">Submit</button>
         </div>
 
