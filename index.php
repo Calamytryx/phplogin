@@ -2,10 +2,10 @@
 
 if (isset($_SESSION['auth'])) {
 
-    header("Location: home");
-    exit();
+  header("Location: home");
+  exit();
 } else {
 
-    header("Location: login");
-    exit();
+  header("Location: login");
+  exit();
 }
