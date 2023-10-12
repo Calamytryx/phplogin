@@ -8,7 +8,7 @@ require '../../assets/includes/security_functions.php';
 
 if (isset($_GET['selector']) && isset($_GET['validator'])) {
 
-    foreach($_GET as $key => $value){
+    foreach ($_GET as $key => $value) {
 
         $_GET[$key] = _cleaninjections(trim($value));
     }
@@ -33,8 +33,7 @@ if (isset($_GET['selector']) && isset($_GET['validator'])) {
         $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
         header("Location: ../");
         exit();
-    }
-    else {
+    } else {
 
         mysqli_stmt_bind_param($stmt, "s", $selector);
         mysqli_stmt_execute($stmt);
@@ -45,8 +44,7 @@ if (isset($_GET['selector']) && isset($_GET['validator'])) {
             $_SESSION['STATUS']['verify'] = 'non-existent or expired token, please use new verification email';
             header("Location: ../");
             exit();
-        }
-        else {
+        } else {
 
             $tokenBin = hex2bin($validator);
             $tokenCheck = password_verify($tokenBin, $row['token']);
@@ -56,68 +54,62 @@ if (isset($_GET['selector']) && isset($_GET['validator'])) {
                 $_SESSION['STATUS']['verify'] = 'invalid token, please use new verification email';
                 header("Location: ../");
                 exit();
-            }
-            else if ($tokenCheck === true) {
+            } else if ($tokenCheck === true) {
 
                 $tokenEmail = $row['user_email'];
 
                 $sql = 'SELECT * FROM users WHERE email=? LIMIT 1;';
                 $stmt = mysqli_stmt_init($conn);
 
-                if (!mysqli_stmt_prepare($stmt, $sql)){
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
 
                     $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                     header("Location: ../");
                     exit();
-                }
-                else {
+                } else {
 
                     mysqli_stmt_bind_param($stmt, "s", $tokenEmail);
                     mysqli_stmt_execute($stmt);
                     $results = mysqli_stmt_get_result($stmt);
 
                     if (!$row = mysqli_fetch_assoc($results)) {
-                        
+
                         $_SESSION['STATUS']['resentsend'] = 'invalid token, please use new verification email';
                         header("Location: ../");
                         exit();
-                    }
-                    else {
+                    } else {
 
                         $sql = 'UPDATE users SET verified_at=NOW() WHERE email=?;';
                         $stmt = mysqli_stmt_init($conn);
 
-                        if (!mysqli_stmt_prepare($stmt, $sql))
-                        {
+                        if (!mysqli_stmt_prepare($stmt, $sql)) {
                             $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                             header("Location: ../");
                             exit();
-                        }
-                        else {
+                        } else {
 
                             mysqli_stmt_bind_param($stmt, "s", $tokenEmail);
                             mysqli_stmt_execute($stmt);
 
                             $sql = "DELETE FROM auth_tokens WHERE user_email=? AND auth_type='account_verify';";
                             $stmt = mysqli_stmt_init($conn);
-                            if (!mysqli_stmt_prepare($stmt, $sql)){
+                            if (!mysqli_stmt_prepare($stmt, $sql)) {
 
                                 $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                                 header("Location: ../");
                                 exit();
-                            }
-                            else {
+                            } else {
 
                                 mysqli_stmt_bind_param($stmt, "s", $tokenEmail);
                                 mysqli_stmt_execute($stmt);
-                                
-                                if (isset($_SESSION['auth'])){
+
+                                if (isset($_SESSION['auth'])) {
 
                                     $_SESSION['auth'] = 'verified';
                                 }
 
                                 $_SESSION['STATUS']['loginstatus'] = 'account activated, please login';
-                                header ("Location: ../../login/");
+                                header("Location: ../../login/");
                             }
                         }
                     }
@@ -125,8 +117,7 @@ if (isset($_GET['selector']) && isset($_GET['validator'])) {
             }
         }
     }
-}
-else {
+} else {
 
     header("Location: ../");
     exit();

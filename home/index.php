@@ -20,8 +20,12 @@ check_verified();
             <div class="d-flex align-items-center p-3 mt-5 mb-3 text-white-50 bg-dark rounded box-shadow">
                 <img class="mr-3" src="../assets/images/logonotextwhite.png" alt="" width="48" height="48">
                 <div class="lh-100">
-                    <h6 class="mb-0 text-white lh-100">Hey there, <?php echo $_SESSION['username']; ?></h6>
-                    <small>Last logged in at <?php echo date("m-d-Y", strtotime($_SESSION['last_login_at'])); ?></small>
+                    <h6 class="mb-0 text-white lh-100">Hey there,
+                        <?php echo $_SESSION['username']; ?>
+                    </h6>
+                    <small>Last logged in at
+                        <?php echo date("m-d-Y", strtotime($_SESSION['last_login_at'])); ?>
+                    </small>
                 </div>
             </div>
 
@@ -65,16 +69,19 @@ check_verified();
 
         <div class="col-sm-2">
             <div class="d-flex align-items-center p-1 mt-5 mb-3 bg-dark rounded box-shadow">
-                <div class="m-1 p-1 bg-white rounded box-shadow"  style="height: 100%;">
+                <div class="m-1 p-1 bg-white rounded box-shadow" style="height: 100%;">
                     <p class="mb-0 text-center">Lonely Pokemons in your route!</p>
-                    <img src="../assets/images/ad-toast.jpg" width="100%" height="auto" alt="Real sexy pokemon" class="mr-2 rounded">
-                    <p class="d-block pl-3 pr-3 font-weight-light">I'm really lonely, my trainer released me because of my naughty nature.
+                    <img src="../assets/images/ad-toast.jpg" width="100%" height="auto" alt="Real sexy pokemon"
+                        class="mr-2 rounded">
+                    <p class="d-block pl-3 pr-3 font-weight-light">I'm really lonely, my trainer released me because of
+                        my naughty nature.
                         Can you catch me with you Master Ball?
                     </p>
                     <div class="d-flex align-items-center">
                         <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
                             <button type="button" class="btn btn-block btn-outline-dark">
-                                Use <img src="../assets/images/meme.png" width="15%" height="15%" alt="Real sexy pokemon" class="mr-2 rounded">
+                                Use <img src="../assets/images/meme.png" width="15%" height="15%"
+                                    alt="Real sexy pokemon" class="mr-2 rounded">
                             </button>
                         </a>
                     </div>
@@ -88,6 +95,6 @@ check_verified();
 
 <?php
 
-    include '../assets/layouts/footer.php'
+include '../assets/layouts/footer.php'
 
     ?>

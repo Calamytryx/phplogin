@@ -4,8 +4,7 @@ if (isset($_SESSION['auth'])) {
 
     header("Location: home");
     exit();
-}
-else {
+} else {
 
     header("Location: login");
     exit();

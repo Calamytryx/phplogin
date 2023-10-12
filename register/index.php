@@ -33,8 +33,8 @@ check_logged_out();
                 <div class="text-center">
                     <sub class="text-danger">
                         <?php
-                            if (isset($_SESSION['ERRORS']['imageerror']))
-                                echo $_SESSION['ERRORS']['imageerror'];
+                        if (isset($_SESSION['ERRORS']['imageerror']))
+                            echo $_SESSION['ERRORS']['imageerror'];
 
                         ?>
                     </sub>
@@ -45,8 +45,8 @@ check_logged_out();
                 <div class="text-center mb-3">
                     <small class="text-success font-weight-bold">
                         <?php
-                            if (isset($_SESSION['STATUS']['signupstatus']))
-                                echo $_SESSION['STATUS']['signupstatus'];
+                        if (isset($_SESSION['STATUS']['signupstatus']))
+                            echo $_SESSION['STATUS']['signupstatus'];
 
                         ?>
                     </small>
@@ -59,8 +59,8 @@ check_logged_out();
                         autofocus>
                     <sub class="text-danger">
                         <?php
-                            if (isset($_SESSION['ERRORS']['usernameerror']))
-                                echo $_SESSION['ERRORS']['usernameerror'];
+                        if (isset($_SESSION['ERRORS']['usernameerror']))
+                            echo $_SESSION['ERRORS']['usernameerror'];
 
                         ?>
                     </sub>
@@ -88,8 +88,8 @@ check_logged_out();
                         required autofocus>
                     <sub class="text-danger">
                         <?php
-                            if (isset($_SESSION['ERRORS']['emailerror']))
-                                echo $_SESSION['ERRORS']['emailerror'];
+                        if (isset($_SESSION['ERRORS']['emailerror']))
+                            echo $_SESSION['ERRORS']['emailerror'];
 
                         ?>
                     </sub>
@@ -109,8 +109,8 @@ check_logged_out();
                         class="form-control" placeholder="Confirm Password" required>
                     <sub class="text-danger mb-4">
                         <?php
-                            if (isset($_SESSION['ERRORS']['passworderror']))
-                                echo $_SESSION['ERRORS']['passworderror'];
+                        if (isset($_SESSION['ERRORS']['passworderror']))
+                            echo $_SESSION['ERRORS']['passworderror'];
 
                         ?>
                     </sub>
@@ -170,25 +170,25 @@ check_logged_out();
 
 include '../assets/layouts/footer.php'
 
-?>
+    ?>
 
 <script type="text/javascript">
-function readURL(input) {
+    function readURL(input) {
 
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
-            $('#imagePreview').hide();
-            $('#imagePreview').fadeIn(650);
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
 
+            }
+            reader.readAsDataURL(input.files[0]);
         }
-        reader.readAsDataURL(input.files[0]);
     }
-}
 
-$("#avatar").change(function() {
-    console.log("here");
-    readURL(this);
-});
+    $("#avatar").change(function () {
+        console.log("here");
+        readURL(this);
+    });
 </script>

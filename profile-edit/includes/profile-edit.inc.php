@@ -14,12 +14,12 @@ use PHPMailer\PHPMailer\Exception;
 
 if (isset($_POST['update-profile'])) {
 
-    foreach($_POST as $key => $value){
+    foreach ($_POST as $key => $value) {
 
         $_POST[$key] = _cleaninjections(trim($value));
     }
 
-    if (!verify_csrf_token()){
+    if (!verify_csrf_token()) {
 
         $_SESSION['STATUS']['editstatus'] = 'Request could not be validated';
         header("Location: ../");
@@ -37,7 +37,7 @@ if (isset($_POST['update-profile'])) {
     $headline = $_POST['headline'];
     $bio = $_POST['bio'];
 
-    if (isset($_POST['gender'])) 
+    if (isset($_POST['gender']))
         $gender = $_POST['gender'];
     else
         $gender = NULL;
@@ -45,7 +45,7 @@ if (isset($_POST['update-profile'])) {
 
     $oldPassword = $_POST['password'];
     $newpassword = $_POST['newpassword'];
-    $passwordrepeat  = $_POST['confirmpassword'];
+    $passwordrepeat = $_POST['confirmpassword'];
 
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -53,69 +53,58 @@ if (isset($_POST['update-profile'])) {
         $_SESSION['ERRORS']['emailerror'] = 'invalid email, try again';
         header("Location: ../");
         exit();
-    } 
+    }
     if ($_SESSION['email'] != $email && !availableEmail($conn, $email)) {
 
         $_SESSION['ERRORS']['emailerror'] = 'email already taken';
         header("Location: ../");
         exit();
     }
-    if ( $_SESSION['username'] != $username && !availableUsername($conn, $username)) {
+    if ($_SESSION['username'] != $username && !availableUsername($conn, $username)) {
 
         $_SESSION['ERRORS']['usernameerror'] = 'username already taken';
         header("Location: ../");
         exit();
-    }
-    else {
+    } else {
 
         $FileNameNew = $_SESSION['profile_image'];
         $file = $_FILES['avatar'];
 
-        if (!empty($_FILES['avatar']['name']))
-        {
+        if (!empty($_FILES['avatar']['name'])) {
             $fileName = $_FILES['avatar']['name'];
             $fileTmpName = $_FILES['avatar']['tmp_name'];
             $fileSize = $_FILES['avatar']['size'];
             $fileError = $_FILES['avatar']['error'];
-            $fileType = $_FILES['avatar']['type']; 
+            $fileType = $_FILES['avatar']['type'];
 
             $fileExt = explode('.', $fileName);
             $fileActualExt = strtolower(end($fileExt));
 
             $allowed = array('jpg', 'jpeg', 'png', 'gif');
-            if (in_array($fileActualExt, $allowed))
-            {
-                if ($fileError === 0)
-                {
-                    if ($fileSize < 10000000)
-                    {
+            if (in_array($fileActualExt, $allowed)) {
+                if ($fileError === 0) {
+                    if ($fileSize < 10000000) {
                         $FileNameNew = uniqid('', true) . "." . $fileActualExt;
                         $fileDestination = '../../assets/uploads/users/' . $FileNameNew;
                         move_uploaded_file($fileTmpName, $fileDestination);
 
-                        if (!unlink('../../assets/uploads/users/' . $_SESSION['profile_image'])) {  
+                        if (!unlink('../../assets/uploads/users/' . $_SESSION['profile_image'])) {
 
                             $_SESSION['ERRORS']['imageerror'] = 'old image could not be deleted';
                             header("Location: ../");
                             exit();
-                        } 
-                    }
-                    else
-                    {
+                        }
+                    } else {
                         $_SESSION['ERRORS']['imageerror'] = 'image size should be less than 10MB';
                         header("Location: ../");
-                        exit(); 
+                        exit();
                     }
-                }
-                else
-                {
+                } else {
                     $_SESSION['ERRORS']['imageerror'] = 'image upload failed, try again';
                     header("Location: ../");
                     exit();
                 }
-            }
-            else
-            {
+            } else {
                 $_SESSION['ERRORS']['imageerror'] = 'invalid image type, try again';
                 header("Location: ../");
                 exit();
@@ -124,32 +113,32 @@ if (isset($_POST['update-profile'])) {
 
 
         /*
-        * -------------------------------------------------------------------------------
-        *   Password Updation
-        * -------------------------------------------------------------------------------
-        */
+         * -------------------------------------------------------------------------------
+         *   Password Updation
+         * -------------------------------------------------------------------------------
+         */
 
-        if( !empty($oldPassword) || !empty($newpassword) || !empty($passwordRepeat)){
+        if (!empty($oldPassword) || !empty($newpassword) || !empty($passwordRepeat)) {
 
             include 'password-edit.inc.php';
         }
-        
+
         if ($passwordUpdated) {
 
             /*
-            * -------------------------------------------------------------------------------
-            *   Sending notification email on password update
-            * -------------------------------------------------------------------------------
-            */
+             * -------------------------------------------------------------------------------
+             *   Sending notification email on password update
+             * -------------------------------------------------------------------------------
+             */
 
             $to = $_SESSION['email'];
             $subject = 'Password Updated';
-            
+
             /*
-            * -------------------------------------------------------------------------------
-            *   Using email template
-            * -------------------------------------------------------------------------------
-            */
+             * -------------------------------------------------------------------------------
+             *   Using email template
+             * -------------------------------------------------------------------------------
+             */
 
             $mail_variables = array();
 
@@ -158,15 +147,15 @@ if (isset($_POST['update-profile'])) {
 
             $message = file_get_contents("./template_notificationemail.php");
 
-            foreach($mail_variables as $key => $value) {
-                
-                $message = str_replace('{{ '.$key.' }}', $value, $message);
+            foreach ($mail_variables as $key => $value) {
+
+                $message = str_replace('{{ ' . $key . ' }}', $value, $message);
             }
-        
+
             $mail = new PHPMailer(true);
-        
+
             try {
-        
+
                 $mail->isSMTP();
                 $mail->Host = MAIL_HOST;
                 $mail->SMTPAuth = true;
@@ -174,28 +163,27 @@ if (isset($_POST['update-profile'])) {
                 $mail->Password = MAIL_PASSWORD;
                 $mail->SMTPSecure = MAIL_ENCRYPTION;
                 $mail->Port = MAIL_PORT;
-        
+
                 $mail->setFrom(MAIL_USERNAME, APP_NAME);
                 $mail->addAddress($to, APP_NAME);
-        
+
                 $mail->isHTML(true);
                 $mail->Subject = $subject;
-                $mail->Body    = $message;
-        
+                $mail->Body = $message;
+
                 $mail->send();
-            } 
-            catch (Exception $e) {
-        
-                
+            } catch (Exception $e) {
+
+
             }
         }
 
 
         /*
-        * -------------------------------------------------------------------------------
-        *   User Updation
-        * -------------------------------------------------------------------------------
-        */
+         * -------------------------------------------------------------------------------
+         *   User Updation
+         * -------------------------------------------------------------------------------
+         */
 
         $sql = "UPDATE users 
             SET username=?,
@@ -207,12 +195,11 @@ if (isset($_POST['update-profile'])) {
             bio=?, 
             profile_image=?";
 
-        if ($passwordUpdated){
+        if ($passwordUpdated) {
 
             $sql .= ", password=? 
                     WHERE id=?;";
-        }
-        else{
+        } else {
 
             $sql .= " WHERE id=?;";
         }
@@ -224,13 +211,14 @@ if (isset($_POST['update-profile'])) {
             $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
             header("Location: ../");
             exit();
-        } 
-        else {
+        } else {
 
-            if ($passwordUpdated){
+            if ($passwordUpdated) {
 
                 $hashedPwd = password_hash($newpassword, PASSWORD_DEFAULT);
-                mysqli_stmt_bind_param($stmt, "ssssssssss", 
+                mysqli_stmt_bind_param(
+                    $stmt,
+                    "ssssssssss",
                     $username,
                     $email,
                     $first_name,
@@ -242,10 +230,11 @@ if (isset($_POST['update-profile'])) {
                     $hashedPwd,
                     $_SESSION['id']
                 );
-            }
-            else{
+            } else {
 
-                mysqli_stmt_bind_param($stmt, "sssssssss", 
+                mysqli_stmt_bind_param(
+                    $stmt,
+                    "sssssssss",
                     $username,
                     $email,
                     $first_name,
@@ -279,8 +268,7 @@ if (isset($_POST['update-profile'])) {
 
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
-} 
-else {
+} else {
 
     header("Location: ../");
     exit();

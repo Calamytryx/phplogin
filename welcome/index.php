@@ -65,7 +65,7 @@ include '../assets/layouts/header.php';
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </section>
 
@@ -135,4 +135,4 @@ include '../assets/layouts/header.php';
 
 include '../assets/layouts/footer.php'
 
-?>
+    ?>

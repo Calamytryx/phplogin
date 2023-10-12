@@ -18,12 +18,12 @@ require '../../assets/vendor/PHPMailer/src/SMTP.php';
 
 if (isset($_POST['verifysubmit'])) {
 
-    foreach($_POST as $key => $value){
+    foreach ($_POST as $key => $value) {
 
         $_POST[$key] = _cleaninjections(trim($value));
     }
 
-    if (!verify_csrf_token()){
+    if (!verify_csrf_token()) {
 
         $_SESSION['STATUS']['verify'] = 'Request could not be validated';
         header("Location: ../");
@@ -46,8 +46,7 @@ if (isset($_POST['verifysubmit'])) {
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");
         exit();
-    }
-    else {
+    } else {
 
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
@@ -62,9 +61,8 @@ if (isset($_POST['verifysubmit'])) {
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");
         exit();
-    }
-    else {
-        
+    } else {
+
         $hashedToken = password_hash($token, PASSWORD_DEFAULT);
         mysqli_stmt_bind_param($stmt, "sss", $email, $selector, $hashedToken);
         mysqli_stmt_execute($stmt);
@@ -86,11 +84,11 @@ if (isset($_POST['verifysubmit'])) {
 
     $message = file_get_contents("./template_verificationemail.php");
 
-    foreach($mail_variables as $key => $value) {
-        
-        $message = str_replace('{{ '.$key.' }}', $value, $message);
+    foreach ($mail_variables as $key => $value) {
+
+        $message = str_replace('{{ ' . $key . ' }}', $value, $message);
     }
-    
+
 
     $mail = new PHPMailer(true);
 
@@ -109,11 +107,10 @@ if (isset($_POST['verifysubmit'])) {
 
         $mail->isHTML(true);
         $mail->Subject = $subject;
-        $mail->Body    = $message;
+        $mail->Body = $message;
 
         $mail->send();
-    } 
-    catch (Exception $e) {
+    } catch (Exception $e) {
 
         // for public use
         $_SESSION['STATUS']['verify'] = 'email could not be sent, try again later';
@@ -128,8 +125,7 @@ if (isset($_POST['verifysubmit'])) {
     $_SESSION['STATUS']['mail'] = 'verification email sent';
     header("Location: ../");
     exit();
-}
-else {
+} else {
     // for public use
     $_SESSION['STATUS']['verify'] = 'Email could not be sent, try again later';
 

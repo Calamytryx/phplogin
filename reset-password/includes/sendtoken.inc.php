@@ -20,12 +20,12 @@ require '../../assets/vendor/PHPMailer/src/SMTP.php';
 if (isset($_POST['resentsend'])) {
 
 
-    foreach($_POST as $key => $value){
+    foreach ($_POST as $key => $value) {
 
         $_POST[$key] = _cleaninjections(trim($value));
     }
 
-    if (!verify_csrf_token()){
+    if (!verify_csrf_token()) {
 
         $_SESSION['STATUS']['resentsend'] = 'Request could not be validated';
         header("Location: ../");
@@ -42,19 +42,18 @@ if (isset($_POST['resentsend'])) {
 
     $sql = "SELECT id FROM users WHERE email=?;";
     $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)){
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
 
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");
         exit();
-    }
-    else {
+    } else {
 
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_store_result($stmt);
 
-        if (mysqli_stmt_num_rows($stmt) == 0){
+        if (mysqli_stmt_num_rows($stmt) == 0) {
 
             $_SESSION['ERRORS']['emailerror'] = 'given email does not exist in our records';
             header("Location: ../");
@@ -70,8 +69,7 @@ if (isset($_POST['resentsend'])) {
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");
         exit();
-    }
-    else {
+    } else {
 
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
@@ -86,9 +84,8 @@ if (isset($_POST['resentsend'])) {
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");
         exit();
-    }
-    else {
-        
+    } else {
+
         $hashedToken = password_hash($token, PASSWORD_DEFAULT);
         mysqli_stmt_bind_param($stmt, "sss", $email, $selector, $hashedToken);
         mysqli_stmt_execute($stmt);
@@ -100,7 +97,7 @@ if (isset($_POST['resentsend'])) {
 
     $to = $email;
     $subject = 'Reset Your Password';
-    
+
     $mail_variables = array();
 
     $mail_variables['APP_NAME'] = APP_NAME;
@@ -109,9 +106,9 @@ if (isset($_POST['resentsend'])) {
 
     $message = file_get_contents("./template_passwordresetemail.php");
 
-    foreach($mail_variables as $key => $value) {
-        
-        $message = str_replace('{{ '.$key.' }}', $value, $message);
+    foreach ($mail_variables as $key => $value) {
+
+        $message = str_replace('{{ ' . $key . ' }}', $value, $message);
     }
 
     $mail = new PHPMailer(true);
@@ -131,11 +128,10 @@ if (isset($_POST['resentsend'])) {
 
         $mail->isHTML(true);
         $mail->Subject = $subject;
-        $mail->Body    = $message;
+        $mail->Body = $message;
 
         $mail->send();
-    } 
-    catch (Exception $e) {
+    } catch (Exception $e) {
 
         // for public use
         $_SESSION['STATUS']['mailstatus'] = 'message could not be sent, try again later';
@@ -150,8 +146,7 @@ if (isset($_POST['resentsend'])) {
     $_SESSION['STATUS']['resentsend'] = 'verification email sent';
     header("Location: ../");
     exit();
-}
-else {
+} else {
 
     header("Location: ../");
     exit();

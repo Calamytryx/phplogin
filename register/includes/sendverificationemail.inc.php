@@ -25,8 +25,7 @@ if (isset($_POST['signupsubmit'])) {
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");
         exit();
-    }
-    else {
+    } else {
 
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
@@ -41,9 +40,8 @@ if (isset($_POST['signupsubmit'])) {
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");
         exit();
-    }
-    else {
-        
+    } else {
+
         $hashedToken = password_hash($token, PASSWORD_DEFAULT);
         mysqli_stmt_bind_param($stmt, "sss", $email, $selector, $hashedToken);
         mysqli_stmt_execute($stmt);
@@ -66,9 +64,9 @@ if (isset($_POST['signupsubmit'])) {
 
     $message = file_get_contents("./template_verificationemail.php");
 
-    foreach($mail_variables as $key => $value) {
-        
-        $message = str_replace('{{ '.$key.' }}', $value, $message);
+    foreach ($mail_variables as $key => $value) {
+
+        $message = str_replace('{{ ' . $key . ' }}', $value, $message);
     }
 
 
@@ -89,17 +87,15 @@ if (isset($_POST['signupsubmit'])) {
 
         $mail->isHTML(true);
         $mail->Subject = $subject;
-        $mail->Body    = $message;
+        $mail->Body = $message;
 
         $mail->send();
-    } 
-    catch (Exception $e) {
+    } catch (Exception $e) {
 
-        
+
     }
 
-}
-else {
+} else {
 
     header("Location: ../");
     exit();

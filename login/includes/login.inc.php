@@ -60,7 +60,7 @@ if (!isset($_POST['loginsubmit'])) {
             $result = mysqli_stmt_get_result($stmt);
 
             if ($row = mysqli_fetch_assoc($result)) {
-                $pwdCheck = password_verify(hash("md5",$password . $row['salt']), $row['password']);
+                $pwdCheck = password_verify(hash("md5", $password . $row['salt']), $row['password']);
 
                 if (!$pwdCheck) {
                     $_SESSION['ERRORS']['wrongpassword'] = 'Wrong password';
@@ -109,8 +109,9 @@ if (!isset($_POST['loginsubmit'])) {
                             time() + 864000,
                             '/',
                             null,
-                            false, // TLS-only
-                            true  // http-only
+                            false,
+                            // TLS-only
+                            true // http-only
                         );
 
                         $hashedToken = password_hash($token, PASSWORD_DEFAULT);

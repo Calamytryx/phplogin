@@ -15,13 +15,13 @@ require '../../assets/vendor/PHPMailer/src/SMTP.php';
 if (isset($_POST['contact-submit'])) {
 
 
-    foreach($_POST as $key => $value){
+    foreach ($_POST as $key => $value) {
 
         $_POST[$key] = _cleaninjections(trim($value));
     }
 
 
-    if (!verify_csrf_token()){
+    if (!verify_csrf_token()) {
 
         $_SESSION['STATUS']['mailstatus'] = 'Request could not be validated';
         header("Location: ../");
@@ -29,13 +29,12 @@ if (isset($_POST['contact-submit'])) {
     }
 
 
-    if (isset($_SESSION['auth'])){
+    if (isset($_SESSION['auth'])) {
 
         $name = $_SESSION['username'];
         $email = $_SESSION['email'];
-    }
-    else {
-        
+    } else {
+
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 
             $_SESSION['ERRORS']['emailerror'] = 'invalid email';
@@ -57,7 +56,7 @@ if (isset($_POST['contact-submit'])) {
         exit();
     }
 
-    
+
 
 
     $subject = "$name sent you a message via your contact form";
@@ -71,9 +70,9 @@ if (isset($_POST['contact-submit'])) {
 
     $message = file_get_contents("./template_contactemail.php");
 
-    foreach($mail_variables as $key => $value) {
-        
-        $message = str_replace('{{ '.$key.' }}', $value, $message);
+    foreach ($mail_variables as $key => $value) {
+
+        $message = str_replace('{{ ' . $key . ' }}', $value, $message);
     }
 
     $mail = new PHPMailer(true);
@@ -93,11 +92,10 @@ if (isset($_POST['contact-submit'])) {
 
         $mail->isHTML(true);
         $mail->Subject = $subject;
-        $mail->Body    = $message;
+        $mail->Body = $message;
 
         $mail->send();
-    } 
-    catch (Exception $e) {
+    } catch (Exception $e) {
 
         // for public use
         $_SESSION['STATUS']['mailstatus'] = 'message could not be sent, try again later';
@@ -112,8 +110,7 @@ if (isset($_POST['contact-submit'])) {
     $_SESSION['STATUS']['mailstatus'] = 'Thanks for contacting! Please Allow 24 hrs for a response';
     header("Location: ../");
     exit();
-}
-else {
+} else {
 
     header("Location: ../");
     exit();

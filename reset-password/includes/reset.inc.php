@@ -12,13 +12,13 @@ require '../../assets/setup/db.inc.php';
 if (isset($_POST['resetsubmit'])) {
 
 
-    foreach($_POST as $key => $value){
+    foreach ($_POST as $key => $value) {
 
         $_POST[$key] = _cleaninjections(trim($value));
     }
 
 
-    if (!verify_csrf_token()){
+    if (!verify_csrf_token()) {
 
         $_SESSION['STATUS']['resetsubmit'] = 'Request could not be validated';
         header("Location: " . $_SERVER['HTTP_REFERER']);
@@ -29,7 +29,7 @@ if (isset($_POST['resetsubmit'])) {
     $selector = $_POST['selector'];
     $validator = $_POST['validator'];
     $password = $_POST['newpassword'];
-    $passwordRepeat = $_POST['confirmpassword'];    
+    $passwordRepeat = $_POST['confirmpassword'];
 
     if (empty($selector) || empty($validator)) {
 
@@ -42,8 +42,7 @@ if (isset($_POST['resetsubmit'])) {
         $_SESSION['ERRORS']['passworderror'] = 'passwords cannot be empty';
         header("Location: " . $_SERVER['HTTP_REFERER']);
         exit();
-    }
-    else if ($password != $passwordRepeat) {
+    } else if ($password != $passwordRepeat) {
 
         $_SESSION['ERRORS']['passworderror'] = 'passwords donot match';
         header("Location: " . $_SERVER['HTTP_REFERER']);
@@ -58,8 +57,7 @@ if (isset($_POST['resetsubmit'])) {
         $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
         header("Location: " . $_SERVER['HTTP_REFERER']);
         exit();
-    }
-    else {
+    } else {
 
         mysqli_stmt_bind_param($stmt, "s", $selector);
         mysqli_stmt_execute($stmt);
@@ -70,8 +68,7 @@ if (isset($_POST['resetsubmit'])) {
             $_SESSION['STATUS']['resentsend'] = 'non-existent or expired token, please use new reset email';
             header("Location: ../");
             exit();
-        }
-        else {
+        } else {
 
             $tokenBin = hex2bin($validator);
             $tokenCheck = password_verify($tokenBin, $row['token']);
@@ -81,63 +78,57 @@ if (isset($_POST['resetsubmit'])) {
                 $_SESSION['STATUS']['resentsend'] = 'invalid token, please use new reset email';
                 header("Location: ../");
                 exit();
-            }
-            else if ($tokenCheck === true) {
+            } else if ($tokenCheck === true) {
 
                 $tokenEmail = $row['user_email'];
 
                 $sql = 'SELECT * FROM users WHERE email=?;';
                 $stmt = mysqli_stmt_init($conn);
 
-                if (!mysqli_stmt_prepare($stmt, $sql)){
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
 
                     $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                     header("Location: " . $_SERVER['HTTP_REFERER']);
                     exit();
-                }
-                else {
+                } else {
 
                     mysqli_stmt_bind_param($stmt, "s", $tokenEmail);
                     mysqli_stmt_execute($stmt);
                     $results = mysqli_stmt_get_result($stmt);
 
                     if (!$row = mysqli_fetch_assoc($results)) {
-                        
+
                         $_SESSION['STATUS']['resentsend'] = 'invalid token, please use new reset email';
                         header("Location: ../");
                         exit();
-                    }
-                    else {
-                        
+                    } else {
+
                         $sql = 'UPDATE users SET password=? WHERE email=?;';
                         $stmt = mysqli_stmt_init($conn);
-                        if (!mysqli_stmt_prepare($stmt, $sql))
-                        {
+                        if (!mysqli_stmt_prepare($stmt, $sql)) {
                             $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                             header("Location: " . $_SERVER['HTTP_REFERER']);
                             exit();
-                        }
-                        else {
+                        } else {
 
                             $newPwdHash = password_hash($password, PASSWORD_DEFAULT);
                             mysqli_stmt_bind_param($stmt, "ss", $newPwdHash, $tokenEmail);
                             mysqli_stmt_execute($stmt);
-                            
+
                             $sql = "DELETE FROM auth_tokens WHERE user_email=? AND auth_type='password_reset';";
                             $stmt = mysqli_stmt_init($conn);
-                            if (!mysqli_stmt_prepare($stmt, $sql)){
+                            if (!mysqli_stmt_prepare($stmt, $sql)) {
 
                                 $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                                 header("Location: " . $_SERVER['HTTP_REFERER']);
                                 exit();
-                            }
-                            else{
+                            } else {
 
                                 mysqli_stmt_bind_param($stmt, "s", $tokenEmail);
                                 mysqli_stmt_execute($stmt);
-                                
+
                                 $_SESSION['STATUS']['loginstatus'] = 'password updated, please log in';
-                                header ("Location: ../../login/");
+                                header("Location: ../../login/");
                             }
                         }
                     }
@@ -145,8 +136,7 @@ if (isset($_POST['resetsubmit'])) {
             }
         }
     }
-}
-else {
+} else {
 
     header("Location: ../");
     exit();

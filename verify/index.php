@@ -2,7 +2,7 @@
 
 define('TITLE', "Verify Email");
 include '../assets/layouts/header.php';
-check_logged_in_butnot_verified(); 
+check_logged_in_butnot_verified();
 
 ?>
 
@@ -20,25 +20,26 @@ check_logged_in_butnot_verified();
             <form action="includes/sendverificationemail.inc.php" method="post">
 
                 <?php insert_csrf_token(); ?>
-            
+
                 <h5 class="text-center mb-5 text-primary">Verify Your Email Address</h5>
 
                 <p>
-                    Before proceeding, please check your email for a verification link. If you did not receive the email,
+                    Before proceeding, please check your email for a verification link. If you did not receive the
+                    email,
                     <button type="submit" name="verifysubmit">click here to send another</button>.
                 </p>
                 <br>
                 <div class="text-center mt-5">
                     <h6 class="text-danger">
                         <?php
-                            if (isset($_SESSION['STATUS']['verify']))
-                                echo $_SESSION['STATUS']['verify'];
+                        if (isset($_SESSION['STATUS']['verify']))
+                            echo $_SESSION['STATUS']['verify'];
                         ?>
                     </h6>
                     <h6 class="text-success">
                         <?php
-                            if (isset($_SESSION['STATUS']['mail']))
-                                echo $_SESSION['STATUS']['mail'];
+                        if (isset($_SESSION['STATUS']['mail']))
+                            echo $_SESSION['STATUS']['mail'];
                         ?>
                     </h6>
                 </div>
@@ -54,4 +55,4 @@ check_logged_in_butnot_verified();
 
 include '../assets/layouts/footer.php'
 
-?>
+    ?>
