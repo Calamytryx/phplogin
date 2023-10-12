@@ -37,8 +37,7 @@
           </div>
           <button type="submit" class="btn btn-dark">Create Post</button>
         </form>
-
-
+        
         <small class="d-block text-right mt-3">
           <a href="#">All updates</a>
         </small>

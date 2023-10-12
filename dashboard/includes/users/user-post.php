@@ -1,6 +1,6 @@
 <?php
 // Query to fetch the image source and uploader's username
-$sql = "SELECT image_source, username, message_content
+$sql = "SELECT image_source, username, message_content, media_files
         FROM user_uploads 
         WHERE username = '" . $_SESSION['username'] . "'";
 $result = mysqli_query($conn, $sql);

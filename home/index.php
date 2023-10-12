@@ -30,7 +30,7 @@ check_verified();
       </div>
 
       <div class="my-3 p-3 bg-white rounded box-shadow">
-        <h4 class="mb-0">Your posts</h4>
+        <h4 class="mb-0">Latest posts</h4>
         <?php include "includes/post.php" ?>
 
         <form action="includes\process_post.php" method="post" enctype="multipart/form-data">
@@ -78,9 +78,6 @@ check_verified();
       </div>
     </div>
 </main>
-
-
-
 
 <?php
 

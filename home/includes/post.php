@@ -1,6 +1,6 @@
 <?php
 // Query to fetch the image source and uploader's username
-$sql = "SELECT image_source, username, message_content, mdeia_files
+$sql = "SELECT image_source, username, message_content, media_files
         FROM user_uploads
         ORDER BY created_at DESC
         LIMIT 10";
