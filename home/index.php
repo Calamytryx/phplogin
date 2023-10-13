@@ -48,7 +48,7 @@ check_verified();
                       <label for="post_content">Post Content:</label>
                       <textarea class="form-control" id="post_content" name="post_content" rows="4"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group"> 
                       <label for="media_upload">Upload Media:</label>
                       <div class="custom-file">
                         <input type="file" class="custom-file-input" id="media_upload" name="media_upload">
