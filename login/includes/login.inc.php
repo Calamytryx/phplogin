@@ -47,6 +47,7 @@ if (!isset($_POST['loginsubmit'])) {
     }
 
     // Creating SESSION Variables
+    // Fetch user details
     $sql = "SELECT * FROM users WHERE username=?;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -59,7 +60,37 @@ if (!isset($_POST['loginsubmit'])) {
       mysqli_stmt_execute($stmt);
       $result = mysqli_stmt_get_result($stmt);
 
-      if ($row = mysqli_fetch_assoc($result)) {
+      if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        // Update last login time
+        $user_id = $row['id'];
+        $sql = "UPDATE users SET last_login_at=NOW() WHERE username=?;";
+        $stmt = mysqli_stmt_init($conn);
+
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+          $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+          header("Location: ../");
+          exit();
+        } else {
+          mysqli_stmt_bind_param($stmt, "s", $username);
+          mysqli_stmt_execute($stmt);
+          mysqli_stmt_close($stmt);
+        }
+
+        // Insert login history
+        $sql = "INSERT INTO user_login_history (user_id) VALUES (?);";
+        $stmt = mysqli_stmt_init($conn);
+
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+          $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
+          header("Location: ../");
+          exit();
+        } else {
+          mysqli_stmt_bind_param($stmt, "i", $user_id);
+          mysqli_stmt_execute($stmt);
+          mysqli_stmt_close($stmt);
+        }
+
         $pwdCheck = password_verify(hash("md5", $password . $row['salt']), $row['password']);
 
         if (!$pwdCheck) {

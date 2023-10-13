@@ -19,8 +19,30 @@
 
       </div>
       <div class="my-3 p-3 bg-white rounded box-shadow">
-        <h4 class="mb-0">Registered Users</h4>
-        <?php include("user-table.php") ?>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm p-2">
+          <div class="container">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a href="?table=user" class="nav-link">Registered Users</a>
+                </li>
+                <li class="nav-item">
+                  <a href="?table=login" class="nav-link">Login History</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <?php
+        if (isset($_GET['table'])) {
+          if ($_GET['table'] == 'user') {
+            include("user-table.php");
+          } elseif ($_GET['table'] == 'login') {
+            include("login-history.php");
+          }
+        }
+        ?>
 
         <small class="d-block text-right mt-3">
           <a href="#"><i class="fas fa-redo"></i></a>
