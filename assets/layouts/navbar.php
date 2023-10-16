@@ -51,10 +51,11 @@
             </li>
 
           <?php } else { ?>
-
+            <?php if ($_SESSION['user_level'] === 1) {?>
             <li class="nav-item">
               <a class="nav-link" href="../welcome">Welcome</a>
             </li>
+            <?php } ?>
 
             <li class="nav-item">
               <a class="nav-link" href="../dashboard">Dashboard</a>
@@ -64,9 +65,11 @@
               <a class="nav-link" href="../home">Home</a>
             </li>
 
+            <?php if ($_SESSION['user_level'] === 1) {?>
             <li class="nav-item">
               <a class="nav-link" href="../contact">Contact Us</a>
             </li>
+            <?php } ?>
 
             <div class="dropdown">
               <button class="btn btn-dark dropdown-toggle" type="button" id="imgdropdown" data-toggle="dropdown"

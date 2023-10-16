@@ -20,8 +20,21 @@ check_verified();
       <div class="d-flex align-items-center p-3 mt-5 mb-3 text-white-50 bg-dark rounded box-shadow">
         <img class="mr-3" src="../assets/images/logonotextwhite.png" alt="" width="48" height="48">
         <div class="lh-100">
-          <h6 class="mb-0 text-white lh-100">Hey there,
-            <?php echo $_SESSION['username']; ?>
+          <h6 class="mb-0 text-white lh-100">Hey there
+            <?php
+            if ($_SESSION['user_level']===3) {
+              echo "Admin ";
+            } elseif ($_SESSION['user_level']===2){
+              echo "Moderator ";
+            } else {
+              echo "User ";
+            }
+            ?>
+            <?php
+            if (isset($_SESSION['first_name'])) {
+              echo "{$_SESSION['first_name']}";
+            }
+            ?>
           </h6>
           <small>Last logged in at
             <?php echo date("m-d-Y", strtotime($_SESSION['last_login_at'])); ?>
@@ -35,8 +48,8 @@ check_verified();
         <div class="accordion" id="accordionExample">
           <div class="card">
             <div id="headingOne">
-              <button class="container-fluid btn btn-dark" type="button" data-toggle="collapse"
-                data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+              <button class="container-fluid btn btn-dark" type="button" data-toggle="collapse" data-target="#collapse1"
+                aria-expanded="true" aria-controls="collapse1">
                 <h5>Add a post</h5>
               </button>
             </div>
@@ -48,7 +61,7 @@ check_verified();
                       <label for="post_content">Post Content:</label>
                       <textarea class="form-control" id="post_content" name="post_content" rows="4"></textarea>
                     </div>
-                    <div class="form-group"> 
+                    <div class="form-group">
                       <label for="media_upload">Upload Media:</label>
                       <div class="custom-file">
                         <input type="file" class="custom-file-input" id="media_upload" name="media_upload">
