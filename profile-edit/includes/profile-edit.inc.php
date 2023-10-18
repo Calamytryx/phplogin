@@ -88,35 +88,31 @@ if (isset($_POST['update-profile'])) {
             $fileDestination = '../../assets/uploads/users/' . $FileNameNew;
             move_uploaded_file($fileTmpName, $fileDestination);
 
-            if (!unlink('../../assets/uploads/users/' . $_SESSION['profile_image'])) {
+            // Update the session with the new image name
+            $_SESSION['profile_image'] = $FileNameNew;
 
-              $_SESSION['ERRORS']['imageerror'] = 'old image could not be deleted';
-              header("Location: ../");
-              exit();
-            }
+            // Update the database with the new image name
+            $userId = $_SESSION['id'];
+            $userimage = $_SESSION['profile_image'];
+            $sql = "UPDATE users SET profile_image = ? WHERE id = ?";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "si", $FileNameNew, $userId);
+            mysqli_stmt_execute($stmt);
+
           } else {
-            $_SESSION['ERRORS']['imageerror'] = 'image size should be less than 10MB';
-            header("Location: ../");
-            exit();
+            $_SESSION['ERRORS']['imageerror'] = 'Image size should be less than 10MB';
           }
         } else {
-          $_SESSION['ERRORS']['imageerror'] = 'image upload failed, try again';
-          header("Location: ../");
-          exit();
+          $_SESSION['ERRORS']['imageerror'] = 'Image upload failed, try again';
         }
       } else {
-        $_SESSION['ERRORS']['imageerror'] = 'invalid image type, try again';
-        header("Location: ../");
-        exit();
+        $_SESSION['ERRORS']['imageerror'] = 'Invalid image type, try again';
       }
     }
 
+    header("Location: ../");
+    exit();
 
-    /*
-     * -------------------------------------------------------------------------------
-     *   Password Updation
-     * -------------------------------------------------------------------------------
-     */
 
     if (!empty($oldPassword) || !empty($newpassword) || !empty($passwordRepeat)) {
 
@@ -125,20 +121,9 @@ if (isset($_POST['update-profile'])) {
 
     if ($passwordUpdated) {
 
-      /*
-       * -------------------------------------------------------------------------------
-       *   Sending notification email on password update
-       * -------------------------------------------------------------------------------
-       */
-
       $to = $_SESSION['email'];
       $subject = 'Password Updated';
 
-      /*
-       * -------------------------------------------------------------------------------
-       *   Using email template
-       * -------------------------------------------------------------------------------
-       */
 
       $mail_variables = array();
 
@@ -178,12 +163,6 @@ if (isset($_POST['update-profile'])) {
       }
     }
 
-
-    /*
-     * -------------------------------------------------------------------------------
-     *   User Updation
-     * -------------------------------------------------------------------------------
-     */
 
     $sql = "UPDATE users 
             SET username=?,

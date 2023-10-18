@@ -22,9 +22,9 @@ check_verified();
         <div class="lh-100">
           <h6 class="mb-0 text-white lh-100">Hey there
             <?php
-            if ($_SESSION['user_level']===3) {
+            if ($_SESSION['user_level'] === 3) {
               echo "Admin ";
-            } elseif ($_SESSION['user_level']===2){
+            } elseif ($_SESSION['user_level'] === 2) {
               echo "Moderator ";
             } else {
               echo "User ";
@@ -45,6 +45,15 @@ check_verified();
       <div class="my-3 p-3 bg-white rounded box-shadow">
         <h4 class="mb-0">Latest posts</h4>
         <?php include "includes/post.php" ?>
+        <div class="text-center">
+          <sub class="text-danger">
+            <?php
+            if (isset($_SESSION['ERRORS']['imageerror'])) {
+              echo $_SESSION['ERRORS']['imageerror'];
+            }
+            ?>
+          </sub>
+        </div>
         <div class="accordion" id="accordionExample">
           <div class="card">
             <div id="headingOne">
@@ -64,8 +73,9 @@ check_verified();
                     <div class="form-group">
                       <label for="media_upload">Upload Media:</label>
                       <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="media_upload" name="media_upload">
-                        <label class="custom-file-label" for="media_upload">Choose file</label>
+                        <input type="file" class="custom-file-input" id="media_upload" name="media_upload"
+                          onchange="updateLabel(this)">
+                        <label class="custom-file-label" for="media_upload" id="file-label">Choose file</label>
                       </div>
 
                     </div>

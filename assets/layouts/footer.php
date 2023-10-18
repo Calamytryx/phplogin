@@ -150,7 +150,16 @@
 
 <?php } ?>
 
-
+<script>
+    function updateLabel(input) {
+        var label = document.getElementById('file-label');
+        if (input.files.length > 0) {
+            label.innerText = input.files[0].name;
+        } else {
+            label.innerText = 'Choose file';
+        }
+    }
+</script>
 <script src="../assets/vendor/js/jquery-3.4.1.min.js"></script>
 <script src="../assets/vendor/js/jquery-3.4.1.slim.min.js"></script>
 <script src="../assets/vendor/js/popper.min.js"></script>
