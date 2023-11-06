@@ -1,5 +1,7 @@
 <?php
 session_start();
+require '../../assets/includes/datacheck.php';
+require '../../assets/includes/security_functions.php';
 require '../../assets/setup/db.inc.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Retrieve post content
