@@ -14,8 +14,8 @@ $result = @mysqli_query($conn, $q);
 if ($result && $_SESSION['user_level'] == "3") { //if no error this will run
   echo '
     <div class="table-responsive">
-    <table class="table table-dark table-bordered table-striped" width="100%">
-      <thread>
+    <table class="table table-hover table-dark table-bordered table-striped" width="100%">
+      <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Username</th>
@@ -26,7 +26,7 @@ if ($result && $_SESSION['user_level'] == "3") { //if no error this will run
           <th scope="col">Verified</th>
           <th scope="col">Last Login</th>
         </tr>
-      </thread>';
+      </thead>';
   while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
     echo '
       <tbody>
