@@ -1,35 +1,35 @@
 <?php
 
 if (!defined('APP_NAME'))
-    define('APP_NAME', 'VTUBERS');
+  define('APP_NAME', 'VTUBERS');
 if (!defined('APP_ORGANIZATION'))
-    define('APP_ORGANIZATION', 'Mtrx');
+  define('APP_ORGANIZATION', 'Mtrx');
 if (!defined('APP_OWNER'))
-    define('APP_OWNER', 'Calamytryx');
+  define('APP_OWNER', 'Calamytryx');
 if (!defined('APP_DESCRIPTION'))
-    define('APP_DESCRIPTION', 'vtuber social network');
+  define('APP_DESCRIPTION', 'vtuber social network');
 
 if (!defined('ALLOWED_INACTIVITY_TIME'))
-    define('ALLOWED_INACTIVITY_TIME', time() + 1 * 60);
+  define('ALLOWED_INACTIVITY_TIME', time() + 1 * 60);
 
 if (!defined('DB_DATABASE'))
-    define('DB_DATABASE', 'database_mtrx');
+  define('DB_DATABASE', 'database_mtrx');
 if (!defined('DB_HOST'))
-    define('DB_HOST', 'localhost');
+  define('DB_HOST', 'localhost');
 if (!defined('DB_USERNAME'))
-    define('DB_USERNAME', 'Calamyty');
+  define('DB_USERNAME', 'Calamyty');
 if (!defined('DB_PASSWORD'))
-    define('DB_PASSWORD', 'Mytryx');
+  define('DB_PASSWORD', 'Mytryx');
 if (!defined('DB_PORT'))
-    define('DB_PORT', '3006');
+  define('DB_PORT', '3006');
 
 if (!defined('MAIL_HOST'))
-    define('MAIL_HOST', 'smtp.gmail.com');
+  define('MAIL_HOST', 'smtp.gmail.com');
 if (!defined('MAIL_USERNAME'))
-    define('MAIL_USERNAME', 'example@gmail.com');
+  define('MAIL_USERNAME', 'ton.agustin09@gmail.com');
 if (!defined('MAIL_PASSWORD'))
-    define('MAIL_PASSWORD', 'password');
+  define('MAIL_PASSWORD', 'apjo omwz jgwp zxws');
 if (!defined('MAIL_ENCRYPTION'))
-    define('MAIL_ENCRYPTION', 'ssl');
+  define('MAIL_ENCRYPTION', 'ssl');
 if (!defined('MAIL_PORT'))
-    define('MAIL_PORT', 465);
+  define('MAIL_PORT', 465);

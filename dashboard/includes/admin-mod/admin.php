@@ -12,10 +12,9 @@
         <div class="lh-100">
           <h6 class="mb-0 text-white lh-100">Admin Dashboard -
             <?php
-             if(isset($_SESSION['first_name']))
-             {
+            if (isset($_SESSION['first_name'])) {
               echo "{$_SESSION['first_name']}";
-             }
+            }
             ?>
           </h6>
           <small>[Development in Progress]</small>
@@ -37,6 +36,11 @@
                   <a href="?table=login" class="nav-link">Login History</a>
                 </li>
               </ul>
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a href="?table=edit" class="nav-link">Edit Users</a>
+                </li>
+              </ul>
             </div>
           </div>
         </nav>
@@ -47,6 +51,8 @@
             include("user-table.php");
           } elseif ($_GET['table'] == 'login') {
             include("login-history.php");
+          } elseif ($_GET['table'] == 'edit') {
+            include("edit-user.php");
           }
         }
         ?>

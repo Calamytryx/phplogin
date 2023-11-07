@@ -1,6 +1,4 @@
 <?php
-require '../../assets/includes/datacheck.php';
-require '../../assets/includes/security_functions.php';
 // Query to fetch the image source and uploader's username
 $sql = "SELECT image_source, username, message_content, media_files, created_at
         FROM user_uploads
